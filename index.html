@@ -139,6 +139,7 @@
             transform: scale(0.97); 
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body onload="init()">
 
@@ -190,7 +191,7 @@
             'Alimentação', 
             'Fixas', 
             'Farmácia', 
-            'Dívida Antiga', 
+            'Dívida', 
             'Saúde', 
             'Roupas', 
             'Pra Casa', 
@@ -202,14 +203,12 @@
 
     // Placeholders fofos e curtos que alternam
     const placeholders = [
-        "Flores pro seu amor 🌷",
-        "Café pra nós dois ☕",
-        "Lanche merecido 🍔",
-        "Um mimo especial ✨",
-        "Aquele docinho 🍩",
-        "Jantar romântico 🍕",
-        "Sorvete de casal 🍦",
-        "Para o nosso cantinho 🏡"
+        "Flores pra princesa",
+        "Mczinho pra ela ficar feliz",
+        "Presente pro meu amor",
+        "Um lanchinho pra gente",
+        "Chocolate pra TPM",
+        "Sushizinho pra princesa"
     ];
 
     function sortearPlaceholder() {
@@ -273,9 +272,18 @@
             },
             body: JSON.stringify(dados)
         }).then(() => {
+            // Comemoração especial quando for Entrada (Recebi) 🎉
+    if (currentType === 'Entrada') {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
+        msgSucesso = `Dinheirinho na conta! R$ ${valor} recebidos com sucesso! 🥳💸`;
+    }
             // Mensagens fofas reativas à descrição
             const textoLower = desc.toLowerCase();
-            let msgSucesso = `Lançamento de R$ ${valor} registrado com sucesso! ✅`;
+            let msgSucesso = `Lançamento de R$ ${valor} registrado com sucesso, gatinho! ✅`;
 
             if (textoLower.includes("flor") || textoLower.includes("flores")) {
                 msgSucesso = "Flores?! Você é o melhor namorado do mundo todinho! 💐🥰";
@@ -286,7 +294,15 @@
             else if (textoLower.includes("blablacar") || textoLower.includes("viagem")) {
                 msgSucesso = "Não vejo a hora de você chegar pra me ver!";
             }
-            
+            else if (textoLower.includes("barbeiro") || textoLower.includes("japa")) || textoLower.includes("cabelo")) {
+                msgSucesso = "Olha, vai ficar ainda mais bonito!";
+            }
+              else if (textoLower.includes("bar") || textoLower.includes("cerveja")) {
+                msgSucesso = "Vai beber sozinho?";
+            }
+           else if (textoLower.includes("mercado") || textoLower.includes("zaffari")) {
+                msgSucesso = "Lembrou de pegar chocolate pra mim?";
+            }
 
             alert(msgSucesso);
             
