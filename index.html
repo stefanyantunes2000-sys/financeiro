@@ -139,7 +139,9 @@
             transform: scale(0.97); 
         }
     </style>
+    <!-- Confetes e Pop-ups bonitos sem o link do github -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body onload="init()">
 
@@ -251,8 +253,15 @@
         const cat = document.getElementById('categoria').value;
         const met = document.getElementById('metodo').value;
 
+        // Aviso customizado e sem a url do github
         if (!valor || !desc) {
-            alert("Psiu, faltou preencher a descrição ou o valor, meu bem!");
+            Swal.fire({
+                title: 'Opa, meu bem!',
+                text: 'Psiu, faltou preencher a descrição ou o valor!',
+                icon: 'warning',
+                confirmButtonColor: '#1976d2',
+                confirmButtonText: 'Vou preencher!'
+            });
             return;
         }
 
@@ -297,14 +306,27 @@
                 msgSucesso = "Lembrou de pegar chocolate pra mim?";
             }
 
-            alert(msgSucesso);
+            // Modal bonito de sucesso
+            Swal.fire({
+                title: 'Registrado! 💙',
+                text: msgSucesso,
+                icon: 'success',
+                confirmButtonColor: '#1976d2',
+                confirmButtonText: 'Arrasou!'
+            });
             
             // Limpa e sorteia outro placeholder
             document.getElementById('valor').value = '';
             document.getElementById('desc').value = '';
             sortearPlaceholder();
         }).catch(err => {
-            alert("Erro na conexão, peça socorro a sua Deusa.");
+            Swal.fire({
+                title: 'Ops!',
+                text: 'Erro na conexão, peça socorro a sua Deusa.',
+                icon: 'error',
+                confirmButtonColor: '#1976d2',
+                confirmButtonText: 'Socorro, Deusa!'
+            });
             console.error(err);
         });
     }
