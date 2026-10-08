@@ -150,7 +150,7 @@
         </div>
         <div>
             <label for="desc">O quê?</label>
-            <input type="text" id="desc" placeholder="Ex: Farmácia, Mercado...">
+            <input type="text" id="desc" placeholder="Ex: Flores para o amor da sua vida, Mc pra me deixar feliz...">
         </div>
     </div>
 
@@ -217,7 +217,7 @@
         const met = document.getElementById('metodo').value;
 
         if (!valor || !desc) {
-            alert("Ei! Preencha o valor e a descrição antes de salvar.");
+            alert("Psiu, faltou preencher a descrição, meu bem!");
             return;
         }
 
@@ -237,13 +237,13 @@
             },
             body: JSON.stringify(dados)
         }).then(() => {
-            alert(`Lançamento de R$ ${valor} enviado para o Controle Financeiro! ✅`);
+            alert(`Lançamento de R$ ${valor} enviado para o Controle Financeiro! ✅ Parabéns, gatinhho!`);
             
             // Limpa os campos após o envio
             document.getElementById('valor').value = '';
             document.getElementById('desc').value = '';
         }).catch(err => {
-            alert("Erro ao enviar para o Make/Notion. Dá uma olhadinha na conexão!");
+            alert("Erro na conexão, peça socorro a sua Deusa.");
             console.error(err);
         });
     }
