@@ -252,7 +252,7 @@
         const met = document.getElementById('metodo').value;
 
         if (!valor || !desc) {
-            alert("Psiu, faltou preencher a descrição ou o valor, meu bem!")
+            alert("Psiu, faltou preencher a descrição ou o valor, meu bem!");
             return;
         }
 
@@ -272,35 +272,28 @@
             },
             body: JSON.stringify(dados)
         }).then(() => {
-            // Comemoração especial quando for Entrada (Recebi) 🎉
-    if (currentType === 'Entrada') {
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
-        msgSucesso = `Dinheirinho na conta! R$ ${valor} recebidos com sucesso! 🥳💸`;
-    }
-            // Mensagens fofas reativas à descrição
             const textoLower = desc.toLowerCase();
             let msgSucesso = `Lançamento de R$ ${valor} registrado com sucesso, gatinho! ✅`;
 
-            if (textoLower.includes("flor") || textoLower.includes("flores")) {
+            // Comemoração especial quando for Entrada (Recebi) 🎉
+            if (currentType === 'Entrada') {
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                msgSucesso = `Dinheirinho na conta! R$ ${valor} recebidos com sucesso! 🥳💸`;
+            } else if (textoLower.includes("flor") || textoLower.includes("flores")) {
                 msgSucesso = "Flores?! Você é o melhor namorado do mundo todinho! 💐🥰";
-            } 
-            else if (textoLower.includes("jantar") || textoLower.includes("encontro") || textoLower.includes("cinema")) {
+            } else if (textoLower.includes("jantar") || textoLower.includes("encontro") || textoLower.includes("cinema")) {
                 msgSucesso = "Salvo! E ó, já tô ansiosa pro nosso momento juntinhos 💕";
-            } 
-            else if (textoLower.includes("blablacar") || textoLower.includes("viagem")) {
+            } else if (textoLower.includes("blablacar") || textoLower.includes("viagem")) {
                 msgSucesso = "Não vejo a hora de você chegar pra me ver!";
-            }
-            else if (textoLower.includes("barbeiro") || textoLower.includes("japa")) || textoLower.includes("cabelo")) {
+            } else if (textoLower.includes("barbeiro") || textoLower.includes("japa") || textoLower.includes("cabelo")) {
                 msgSucesso = "Olha, vai ficar ainda mais bonito!";
-            }
-              else if (textoLower.includes("bar") || textoLower.includes("cerveja")) {
+            } else if (textoLower.includes("bar") || textoLower.includes("cerveja")) {
                 msgSucesso = "Vai beber sozinho?";
-            }
-           else if (textoLower.includes("mercado") || textoLower.includes("zaffari")) {
+            } else if (textoLower.includes("mercado") || textoLower.includes("zaffari")) {
                 msgSucesso = "Lembrou de pegar chocolate pra mim?";
             }
 
@@ -311,7 +304,7 @@
             document.getElementById('desc').value = '';
             sortearPlaceholder();
         }).catch(err => {
-           alert("Erro na conexão, peça socorro a sua Deusa.");
+            alert("Erro na conexão, peça socorro a sua Deusa.");
             console.error(err);
         });
     }
