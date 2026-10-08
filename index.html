@@ -43,6 +43,13 @@
             margin-bottom: 24px; 
             font-size: 1.45rem; 
             letter-spacing: -0.5px; 
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s ease;
+        }
+
+        h2:hover {
+            color: var(--primary);
         }
 
         /* Toggle Entrada / Saída */
@@ -136,7 +143,7 @@
 <body onload="init()">
 
 <div class="app-card">
-    <h2>Controle Financeiro 📊</h2>
+    <h2 id="titulo-app" onclick="easterEggTitulo()">Controle Financeiro 📊</h2>
 
     <div class="type-toggle">
         <button class="type-btn active" id="btn-in" onclick="setType('Entrada')">Recebi (+)</button>
@@ -150,7 +157,7 @@
         </div>
         <div>
             <label for="desc">O quê?</label>
-            <input type="text" id="desc" placeholder="Ex: Flores para o amor da sua vida, Mc pra me deixar feliz...">
+            <input type="text" id="desc" placeholder="Ex: Farmácia, Mercado...">
         </div>
     </div>
 
@@ -193,8 +200,27 @@
         ]
     };
 
+    // Placeholders fofos e curtos que alternam
+    const placeholders = [
+        "Flores pro seu amor 🌷",
+        "Café pra nós dois ☕",
+        "Lanche merecido 🍔",
+        "Um mimo especial ✨",
+        "Aquele docinho 🍩",
+        "Jantar romântico 🍕",
+        "Sorvete de casal 🍦",
+        "Para o nosso cantinho 🏡"
+    ];
+
+    function sortearPlaceholder() {
+        const inputDesc = document.getElementById('desc');
+        const aleatorio = placeholders[Math.floor(Math.random() * placeholders.length)];
+        inputDesc.placeholder = aleatorio;
+    }
+
     function init() {
         renderCategorias();
+        sortearPlaceholder();
     }
 
     function setType(type) {
@@ -202,12 +228,22 @@
         document.getElementById('btn-in').classList.toggle('active', type === 'Entrada');
         document.getElementById('btn-out').classList.toggle('active', type === 'Saída');
         renderCategorias();
+        sortearPlaceholder();
     }
 
     function renderCategorias() {
         const select = document.getElementById('categoria');
         const lista = categorias[currentType];
         select.innerHTML = lista.map(c => `<option value="${c}">${c}</option>`).join('');
+    }
+
+    // Easter egg de clicar no título
+    function easterEggTitulo() {
+        const titulo = document.getElementById('titulo-app');
+        titulo.innerText = "Controle para nosso futuro juntos!";
+        setTimeout(() => {
+            titulo.innerText = "Controle Financeiro 📊";
+        }, 3000);
     }
 
     function processarEnvio() {
@@ -217,7 +253,7 @@
         const met = document.getElementById('metodo').value;
 
         if (!valor || !desc) {
-            alert("Psiu, faltou preencher a descrição, meu bem!");
+            alert("Psiu, faltou preencher a descrição ou o valor, meu bem!")
             return;
         }
 
@@ -237,13 +273,29 @@
             },
             body: JSON.stringify(dados)
         }).then(() => {
-            alert(`Lançamento de R$ ${valor} enviado para o Controle Financeiro! ✅ Parabéns, gatinhho!`);
+            // Mensagens fofas reativas à descrição
+            const textoLower = desc.toLowerCase();
+            let msgSucesso = `Lançamento de R$ ${valor} registrado com sucesso! ✅`;
+
+            if (textoLower.includes("flor") || textoLower.includes("flores")) {
+                msgSucesso = "Flores?! Você é o melhor namorado do mundo todinho! 💐🥰";
+            } 
+            else if (textoLower.includes("jantar") || textoLower.includes("encontro") || textoLower.includes("cinema")) {
+                msgSucesso = "Salvo! E ó, já tô ansiosa pro nosso momento juntinhos 💕";
+            } 
+            else if (textoLower.includes("blablacar") || textoLower.includes("viagem")) {
+                msgSucesso = "Não vejo a hora de você chegar pra me ver!";
+            }
             
-            // Limpa os campos após o envio
+
+            alert(msgSucesso);
+            
+            // Limpa e sorteia outro placeholder
             document.getElementById('valor').value = '';
             document.getElementById('desc').value = '';
+            sortearPlaceholder();
         }).catch(err => {
-            alert("Erro na conexão, peça socorro a sua Deusa.");
+           alert("Erro na conexão, peça socorro a sua Deusa.");
             console.error(err);
         });
     }
